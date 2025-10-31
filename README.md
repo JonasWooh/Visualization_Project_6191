@@ -10,19 +10,20 @@ The repo includes Jupyter notebooks, an interactive dashboard (code/app.py), and
 - Reproducible chart exports and scripts
 
 ## Project Structure
+```text
 .
 ├─ code/
 │  ├─ Shorts_TikTok_Trends_EDA.ipynb
 │  ├─ Viz_Project.ipynb
 │  ├─ YouTube_TikTok_Interactive_Dash.ipynb
-│  ├─ app.py                 # Dashboard entry (Plotly Dash)
-│  └─ assets/
-│     └─ style.css
+│  └─ app.py  # Dashboard entry (Plotly Dash)
+├─ assets/
+│  └─ style.css
 ├─ data/
 │  ├─ USvideos.csv
 │  └─ youtube_shorts_tiktok_trends_2025.csv
-├─ result_pic/               # Exported charts and report assets
-├─ environment.yml           # Conda environment specification
+├─ result_pic/   # Exported charts and report assets
+├─ environment.yml  # Conda environment specification
 └─ README.md
 
 ## Quick Start
