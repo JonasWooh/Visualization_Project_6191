@@ -1,0 +1,345 @@
+
+/* assets/style.css — Elegant modern theme for the Dash app
+   - Light/Dark via prefers-color-scheme
+   - Subtle cards, clean typography, refined controls
+   - No external fonts required (system stack)
+*/
+
+/* ------------------------------
+   Design Tokens (Light)
+---------------------------------*/
+:root {
+  --bg: #f7f8fb;
+  --card: #ffffff;
+  --text: #0f172a;          /* slate-900 */
+  --muted: #6b7280;         /* gray-500 */
+  --border: #e5e7eb;        /* gray-200 */
+  --shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+
+  --accent: #4c6ef5;        /* indigo-500 (TikTok-ish accent) */
+  --accent-2: #f03e3e;      /* red-500 (YouTube-ish accent) */
+  --accent-soft: rgba(76, 110, 245, 0.08);
+
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-lg: 18px;
+
+  --focus: 0 0 0 3px rgba(76, 110, 245, 0.35);
+
+  --plot-bg: transparent;
+}
+
+/* ------------------------------
+   Design Tokens (Dark)
+---------------------------------*/
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1220;          /* deep navy */
+    --card: #0f172a;        /* slate-900 */
+    --text: #e2e8f0;        /* slate-200 */
+    --muted: #94a3b8;       /* slate-400 */
+    --border: #1f2a44;      /* darker border */
+    --shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+
+    --accent: #8ab4ff;
+    --accent-2: #ff6b6b;
+    --accent-soft: rgba(138, 180, 255, 0.12);
+
+    --plot-bg: transparent;
+  }
+}
+
+/* ------------------------------
+   Base
+---------------------------------*/
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(76,110,245,0.10), transparent 60%),
+    radial-gradient(900px 500px at 110% 20%, rgba(240,62,62,0.10), transparent 60%),
+    var(--bg);
+  color: var(--text);
+  font: 15px/1.55 ui-sans-serif, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings */
+h1,h2,h3 {
+  color: var(--text);
+  margin: 0 0 0.35rem;
+}
+h2 {
+  font-size: 1.65rem;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  position: relative;
+}
+h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 56px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  opacity: 0.8;
+}
+
+/* Center the decorative underline only for KPI values */
+#kpi-row h2 {
+  position: relative;          /* keep the pseudo element anchored */
+  text-align: center;
+  padding-bottom: 2px;         /* tiny breathing space above the bar */
+}
+#kpi-row h2::after {
+  left: 50%;
+  transform: translateX(-50%); /* center */
+  width: 48px;                 /* consistent length */
+  height: 3px;
+  bottom: -6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  opacity: .85;
+}
+
+
+/* Muted paragraph */
+p.muted, .muted { color: var(--muted); }
+
+/* Container (align with inline maxWidth) */
+#react-entry-point > div { /* Dash root */
+  padding: 8px;
+}
+
+/* ------------------------------
+   Cards & sections
+---------------------------------*/
+section, .card, #kpi-row > div, .dash-graph {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* KPI cards (by layout: #kpi-row > div) */
+/* KPI cards */
+#kpi-row > div {
+  display: flex;                 /* center both axes */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;            /* make text centered */
+  padding: 14px 16px;
+}
+#kpi-row > div > div:first-child { /* title */
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+#kpi-row > div > h2,
+#kpi-row > div > div:nth-child(2) { /* value element (your H2) */
+  margin: 4px 0 6px;
+}
+#kpi-row > div > div:last-child {   /* subtitle */
+  color: var(--muted);
+}
+#kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+@media (max-width: 860px) {
+  #kpi-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+
+
+/* ------------------------------
+   Tabs
+---------------------------------*/
+.tab {
+  border: 1px solid var(--border) !important;
+  border-bottom: none !important;
+  background: var(--card) !important;
+  color: var(--muted) !important;
+  margin-right: 8px !important;
+  border-top-left-radius: var(--radius-sm) !important;
+  border-top-right-radius: var(--radius-sm) !important;
+  padding: 10px 14px !important;
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, color .12s ease;
+}
+.tab:hover { color: var(--text) !important; transform: translateY(-1px); }
+.tab--selected {
+  color: var(--text) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 4px 12px rgba(76,110,245,0.18);
+}
+
+/* The tabs container content */
+#tab-body { padding: 12px; }
+
+/* ------------------------------
+   Dropdowns (react-select)
+---------------------------------*/
+.Select-control {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: none !important;
+}
+.Select-control:hover { border-color: var(--accent) !important; }
+.is-focused:not(.is-open) > .Select-control {
+  border-color: var(--accent) !important;
+  box-shadow: var(--focus) !important;
+}
+.Select-menu-outer {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow) !important;
+}
+.Select-placeholder, .Select--single > .Select-control .Select-value, .Select-input > input {
+  color: var(--muted) !important;
+}
+.Select--multi .Select-value {
+  background: var(--accent-soft) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+  border-radius: 999px !important;
+}
+
+/* ------------------------------
+   RangeSlider (rc-slider)
+---------------------------------*/
+.rc-slider {
+  margin: 8px 10px 4px;
+}
+.rc-slider-rail {
+  background-color: rgba(99,102,241,0.18) !important; /* indigo-ish */
+  height: 6px !important;
+  border-radius: 999px !important;
+}
+.rc-slider-track {
+  background-color: var(--accent) !important;
+  height: 6px !important;
+  border-radius: 999px !important;
+}
+.rc-slider-dot {
+  border: 2px solid var(--border) !important;
+  background: var(--card) !important;
+  width: 10px; height: 10px;
+  margin-top: -2px;
+}
+.rc-slider-handle {
+  border: 2px solid var(--accent) !important;
+  width: 18px; height: 18px;
+  margin-top: -6px;
+  background: #fff;
+  box-shadow: var(--focus);
+}
+@media (prefers-color-scheme: dark) {
+  .rc-slider-handle { background: #0b1220; }
+}
+
+/* ------------------------------
+   Graph wrappers
+---------------------------------*/
+.dash-graph {
+  padding: 10px;
+  margin-bottom: 14px;
+}
+.js-plotly-plot, .dash-graph .svg-container {
+  background: var(--plot-bg) !important;
+}
+
+/* Reduce extra padding inside modebar-hidden graphs */
+.modebar { display: none !important; }
+
+/* ------------------------------
+   Labels & helpers
+---------------------------------*/
+label {
+  display: inline-block;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+/* Fine print helper text */
+.tip, .helper { color: var(--muted); font-size: 12px; }
+
+/* ------------------------------
+   Buttons (if added later)
+---------------------------------*/
+button, .btn {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+button:hover, .btn:hover {
+  border-color: var(--accent);
+  box-shadow: 0 6px 14px rgba(76,110,245,0.18);
+  transform: translateY(-1px);
+}
+button:focus-visible, .btn:focus-visible { outline: none; box-shadow: var(--focus); }
+
+/* ------------------------------
+   Scrollbar (WebKit)
+---------------------------------*/
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  border-radius: 12px;
+}
+*::-webkit-scrollbar-thumb:hover { filter: brightness(1.05); }
+
+/* ------------------------------
+   Small screens
+---------------------------------*/
+@media (max-width: 720px) {
+  h2 { font-size: 1.35rem; }
+  #tab-body { padding: 8px; }
+  .dash-graph { padding: 6px; }
+}
+
+
+.Select.is-disabled .Select-control {
+  cursor: not-allowed;
+  opacity: .55;
+  filter: grayscale(0.2);
+  box-shadow: none !important;
+  border-color: var(--border) !important;
+}
+.Select.is-disabled .Select-placeholder,
+.Select.is-disabled .Select--single > .Select-control .Select-value {
+  color: var(--muted) !important;
+}
+.Select.is-disabled .Select-arrow-zone,
+.Select.is-disabled .Select-clear-zone {
+  display: none !important;      
+}
+.Select.is-disabled .Select-control:hover {
+  border-color: var(--border) !important;
+}
+.is-focused.Select.is-disabled > .Select-control {
+  box-shadow: none !important;
+}
+
+.rc-slider-disabled {
+  opacity: .45;
+  pointer-events: none;          
+}
+.rc-slider-disabled .rc-slider-handle {
+  box-shadow: none !important;
+  border-color: var(--border) !important;
+}

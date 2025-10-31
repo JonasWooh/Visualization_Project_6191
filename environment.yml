@@ -1,0 +1,13 @@
+name: viz_env
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.10
+  - numpy
+  - pandas
+  - jupyter
+  - nb_conda_kernels
+  - dash
+  - yfinance
+prefix: /Users/jonasw/anaconda3/envs/viz_env
