@@ -25,6 +25,7 @@ The repo includes Jupyter notebooks, an interactive dashboard (code/app.py), and
 ├─ result_pic/   # Exported charts and report assets
 ├─ environment.yml  # Conda environment specification
 └─ README.md
+```
 
 ## Quick Start
 
