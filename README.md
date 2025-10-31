@@ -20,7 +20,6 @@ The repo includes Jupyter notebooks, an interactive dashboard (code/app.py), and
 ├─ assets/
 │  └─ style.css
 ├─ data/
-│  ├─ USvideos.csv
 │  └─ youtube_shorts_tiktok_trends_2025.csv
 ├─ result_pic/   # Exported charts and report assets
 ├─ environment.yml  # Conda environment specification
